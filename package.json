@@ -1,9 +1,9 @@
 {
   "name": "sudoku",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": {},
-  "license": "MIT",
+  "author": "Matt Slocum",
+  "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack"

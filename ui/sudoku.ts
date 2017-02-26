@@ -1,8 +1,13 @@
 import {SudokuSquare} from "./SudokuSquare";
+import {Elimination} from "./solvers/elimination";
+import {ISolvers} from "./solvers/ISolvers";
 
 export class Sudoku {
     /** @type {Array} Left to right, top to bottom array of numbers */
     private squares : SudokuSquare[] = [];
+    private solvers : ISolvers[] = [
+        new Elimination()
+    ];
 
     /**
      * @param numbers Left to right, top to bottom array of numbers
@@ -13,34 +18,17 @@ export class Sudoku {
         });
     }
 
-    public elimiate() : void {
-        this.elimiateOptions();
+    public reduce() : void {
+        this.solvers.forEach((solver) => {
+            solver.reduce(this);
+        });
     }
 
-    private elimiateOptions() : void {
-        for (let i :number = 0; i < 9; i++) {
-            this.eliminateSet(this.getRow(i));
-            this.eliminateSet(this.getColumn(i));
-            this.eliminateSet(this.getGroup(i));
-        }
-    }
-
-    private eliminateSet(squares : SudokuSquare[]) : void {
-        for (let i : number = 0; i < squares.length; i++) {
-            if (squares[i].isFound()) {
-                let num : number = squares[i].number;
-                for (let checkIndex : number = 0; checkIndex < squares.length; checkIndex++) {
-                    squares[checkIndex].notNumber(num);
-                }
-            }
-        }
-    }
-
-    private getRow(rowNum : number) : SudokuSquare[] {
+    public getRow(rowNum : number) : SudokuSquare[] {
         return this.squares.slice(rowNum * 9, rowNum * 9 + 9);
     }
 
-    private getColumn(colNum : number) : SudokuSquare[] {
+    public getColumn(colNum : number) : SudokuSquare[] {
         let column : SudokuSquare[] = [];
 
         for (let i : number = 0; i < 9; i++) {
