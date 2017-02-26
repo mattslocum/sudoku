@@ -10,13 +10,8 @@ jQuery(() => {
         init((<any>games)[jQuery('#games').val()]);
     });
 
-    jQuery('#reduce').click(() => {
+    jQuery('#step').click(() => {
         mySudoku.reduce();
-        populateGrid();
-    });
-
-    jQuery('#identify').click(() => {
-        mySudoku.identify();
         populateGrid();
     });
 

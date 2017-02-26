@@ -1,12 +1,14 @@
 import {SudokuSquare} from "./SudokuSquare";
-import {Elimination} from "./solvers/elimination";
+import {Elimination} from "./solvers/Elimination";
 import {ISolvers} from "./solvers/ISolvers";
+import {SingleOption} from "./solvers/SingleOption";
 
 export class Sudoku {
     /** @type {Array} Left to right, top to bottom array of numbers */
     private squares : SudokuSquare[] = [];
     private solvers : ISolvers[] = [
-        new Elimination()
+        new Elimination(),
+        new SingleOption()
     ];
 
     /**
@@ -21,6 +23,7 @@ export class Sudoku {
     public reduce() : void {
         this.solvers.forEach((solver) => {
             solver.reduce(this);
+            this.identify();
         });
     }
 
