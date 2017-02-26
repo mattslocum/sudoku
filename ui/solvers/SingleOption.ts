@@ -3,11 +3,13 @@ import {Sudoku} from "../sudoku";
 import {SudokuSquare} from "../SudokuSquare";
 
 export class SingleOption implements ISolvers {
-    public reduce(sudoku : Sudoku) {
+    constructor(private sudoku : Sudoku) {}
+
+    public reduce() {
         for (let i :number = 0; i < 9; i++) {
-            this.FindSingle(sudoku.getRow(i));
-            this.FindSingle(sudoku.getColumn(i));
-            this.FindSingle(sudoku.getGroup(i));
+            this.FindSingle(this.sudoku.getRow(i));
+            this.FindSingle(this.sudoku.getColumn(i));
+            this.FindSingle(this.sudoku.getGroup(i));
         }
     }
 

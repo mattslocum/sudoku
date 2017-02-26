@@ -3,11 +3,13 @@ import {Sudoku} from "../sudoku";
 import {SudokuSquare} from "../SudokuSquare";
 
 export class Elimination implements ISolvers {
-    public reduce(sudoku : Sudoku) {
+    constructor(private sudoku : Sudoku) {}
+
+    public reduce() {
         for (let i :number = 0; i < 9; i++) {
-            this.eliminateSet(sudoku.getRow(i));
-            this.eliminateSet(sudoku.getColumn(i));
-            this.eliminateSet(sudoku.getGroup(i));
+            this.eliminateSet(this.sudoku.getRow(i));
+            this.eliminateSet(this.sudoku.getColumn(i));
+            this.eliminateSet(this.sudoku.getGroup(i));
         }
     }
 

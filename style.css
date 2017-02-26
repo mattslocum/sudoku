@@ -34,6 +34,7 @@ body {
     border: 1px solid #bbb;
     height: 36px;
     line-height: 36px;
+    position: relative;
     text-align: center;
     width: 36px;
 }
@@ -78,4 +79,52 @@ select {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.option:before {
+    font-size: 10px;
+    position: absolute;
+    opacity: 0.5;
+}
+.option_1:before {
+    content: '1';
+    top: -13px;
+    left: 3px;
+}
+.option_2:before {
+    content: '2';
+    top: -13px;
+    left: 16px;
+}
+.option_3:before {
+    content: '3';
+    top: -13px;
+    left: 28px;
+}
+.option_4:before {
+    content: '4';
+    left: 3px;
+}
+.option_5:before {
+    content: '5';
+    left: 16px;
+}
+.option_6:before {
+    content: '6';
+    left: 28px;
+}
+.option_7:before {
+    content: '7';
+    left: 3px;
+    top: 13px;
+}
+.option_8:before {
+    content: '8';
+    top: 13px;
+    left: 16px;
+}
+.option_9:before {
+    content: '9';
+    top: 13px;
+    left: 28px;
 }

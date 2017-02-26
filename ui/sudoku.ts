@@ -2,13 +2,22 @@ import {SudokuSquare} from "./SudokuSquare";
 import {Elimination} from "./solvers/Elimination";
 import {ISolvers} from "./solvers/ISolvers";
 import {SingleOption} from "./solvers/SingleOption";
+import {Pointer} from "./solvers/Pointer";
+import {NakedSet} from "./solvers/NakedSet";
+
+export interface IPos {
+    x : number;
+    y : number;
+}
 
 export class Sudoku {
     /** @type {Array} Left to right, top to bottom array of numbers */
     private squares : SudokuSquare[] = [];
     private solvers : ISolvers[] = [
-        new Elimination(),
-        new SingleOption()
+        new Elimination(this),
+        new SingleOption(this),
+        new Pointer(this),
+        new NakedSet(this)
     ];
 
     /**
@@ -66,5 +75,20 @@ export class Sudoku {
                 }
             }
         }
+    }
+
+    public getSquarePosition(square : SudokuSquare) : IPos {
+        let index : number = this.squares.indexOf(square);
+
+        return {
+            x: Math.floor(index / 9),
+            y: index % 9
+        };
+    }
+
+    public getGroupID(square : SudokuSquare) : number {
+        let index : number = this.squares.indexOf(square);
+
+        return (Math.floor(index / 27) * 3) + Math.floor((index % 9) / 3);
     }
 }

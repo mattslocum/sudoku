@@ -37,9 +37,15 @@ function populateGrid() {
         let group : SudokuSquare[] = mySudoku.getGroup(i);
 
         jQuery(`.boxGroup:eq(${i}) .box`).each((nBox, elem) => {
-            jQuery(elem).text(
-                group[nBox].isFound() ? group[nBox].number : ''
+            jQuery(elem).html(
+                group[nBox].isFound() ? group[nBox].number.toString() : buildCellOptions(group[nBox])
             );
         })
     }
+}
+
+function buildCellOptions(cell : SudokuSquare) : string {
+    return cell.getPossible().map((num) => {
+        return `<span class="option option_${num}"/>`;
+    }).join('');
 }
