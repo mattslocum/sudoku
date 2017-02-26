@@ -67,22 +67,13 @@ export class Sudoku {
     }
 
     public identify() : void {
-        for (let i :number = 0; i < 9; i++) {
-            this.identifySet(this.getRow(i));
-            this.identifySet(this.getColumn(i));
-            this.identifySet(this.getGroup(i));
-        }
-    }
-
-    private identifySet(squares : SudokuSquare[]) : void {
-        for (let i : number = 0; i < squares.length; i++) {
-            if (squares[i].isFound()) {
-                let num : number = squares[i].number;
-                for (let checkIndex : number = 0; checkIndex < squares.length; checkIndex++) {
-                    squares[checkIndex].tryIdentify();
+        for (let i : number = 0; i < this.squares.length; i++) {
+            if (this.squares[i].isFound()) {
+                let num : number = this.squares[i].number;
+                for (let checkIndex : number = 0; checkIndex < this.squares.length; checkIndex++) {
+                    this.squares[checkIndex].tryIdentify();
                 }
             }
         }
     }
-
 }
