@@ -4,6 +4,7 @@ import {ISolvers} from "./solvers/ISolvers";
 import {SingleOption} from "./solvers/SingleOption";
 import {Pointer} from "./solvers/Pointer";
 import {NakedSet} from "./solvers/NakedSet";
+import {HiddenSet} from "./solvers/HiddenSet";
 
 export interface IPos {
     x : number;
@@ -13,11 +14,16 @@ export interface IPos {
 export class Sudoku {
     /** @type {Array} Left to right, top to bottom array of numbers */
     private squares : SudokuSquare[] = [];
+    // TODO: run only 1 solver and don't do the next one unless the first one doesn't
+    //       return a change.
     private solvers : ISolvers[] = [
         new Elimination(this),
         new SingleOption(this),
         new Pointer(this),
-        new NakedSet(this)
+        new NakedSet(this),
+        // Do we need hidden set and NakedSet. Hidden will find Naked too, but not as
+        // optimally. Keep them both since in the future we will do the todo above.
+        new HiddenSet(this)
     ];
 
     /**

@@ -39,6 +39,10 @@ export class SudokuSquare {
         return this.possibleNumbers;
     }
 
+    public setPossible(possible : number[]) {
+        this.possibleNumbers = possible;
+    }
+
     /**
      * returns boolean if we didn't know the number before, but it only had 1 possible left and is not identified.
      */
