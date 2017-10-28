@@ -22,13 +22,17 @@ export class SudokuSquare {
         this.possibleNumbers = null;
     }
 
-    public notNumber(num : number) : void {
-        if (this.isFound()) return;
+    // remove given number from the possibleNumbers
+    // returns true if it had an effect, else false.
+    public notNumber(num : number) : boolean {
+        if (this.isFound()) return false;
 
         let location : number = this.possibleNumbers.indexOf(num);
         if (location != -1) {
             this.possibleNumbers.splice(location, 1);
+            return true;
         }
+        return false;
     }
 
     public mightBe(num : number) : boolean {
@@ -55,5 +59,9 @@ export class SudokuSquare {
         }
 
         return false;
+    }
+
+    public toString() : string {
+        return this._number.toString();
     }
 }

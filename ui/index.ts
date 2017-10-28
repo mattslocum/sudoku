@@ -27,6 +27,7 @@ function init(boxes : number[]) {
     // Elimination only Set:
     mySudoku = new Sudoku(boxes);
 
+    // for debugging
     (<any>window)['mySudoku'] = mySudoku;
 
     populateGrid();

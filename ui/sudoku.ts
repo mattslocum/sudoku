@@ -23,7 +23,8 @@ export class Sudoku {
         new NakedSet(this),
         // Do we need hidden set and NakedSet. Hidden will find Naked too, but not as
         // optimally. Keep them both since in the future we will do the todo above.
-        new HiddenSet(this)
+        // disabling, since HiddenSet has a bug
+        // new HiddenSet(this)
     ];
 
     /**
@@ -37,7 +38,7 @@ export class Sudoku {
 
     public reduce() : void {
         this.solvers.forEach((solver) => {
-            solver.reduce(this);
+            solver.reduce();
             this.identify();
         });
     }
