@@ -5,6 +5,7 @@ import {SingleOption} from "./solvers/SingleOption";
 import {Pointer} from "./solvers/Pointer";
 import {NakedSet} from "./solvers/NakedSet";
 import {HiddenSet} from "./solvers/HiddenSet";
+import {ChainInference} from "./solvers/ChainInference";
 
 export interface IPos {
     x : number;
@@ -28,6 +29,13 @@ export class Sudoku {
     ];
 
     /**
+     * These are only called if the solvers don't help. If one works, it stops.
+     */
+    private advancedSolvers : ISolvers[] = [
+        new ChainInference(this)
+    ];
+
+    /**
      * @param numbers Left to right, top to bottom array of numbers
      */
     constructor(numbers : number[]) {
@@ -37,10 +45,23 @@ export class Sudoku {
     }
 
     public reduce() : void {
+        if (this.isSolved()) {
+            return;
+        }
+        let identified : number = 0;
+
         this.solvers.forEach((solver) => {
             solver.reduce();
-            this.identify();
+            identified += this.identify();
         });
+
+        if (!identified) {
+            console.log('switching to advanced');
+            this.advancedSolvers.some(solver => {
+                solver.reduce();
+                return this.identify() !== 0;
+            });
+        }
     }
 
     public getRow(rowNum : number) : SudokuSquare[] {
@@ -73,17 +94,20 @@ export class Sudoku {
         return group;
     }
 
-    public identify() : void {
+    public identify() : number {
+        let found : number = 0;
         for (let i : number = 0; i < this.squares.length; i++) {
             if (this.squares[i].isFound()) {
                 let num : number = this.squares[i].number;
                 for (let checkIndex : number = 0; checkIndex < this.squares.length; checkIndex++) {
-                    this.squares[checkIndex].tryIdentify();
+                    found += +this.squares[checkIndex].tryIdentify();
                 }
             }
         }
+        return found;
     }
 
+    // Maybe we should store the square position in the square instead?
     public getSquarePosition(square : SudokuSquare) : IPos {
         let index : number = this.squares.indexOf(square);
 
@@ -93,9 +117,22 @@ export class Sudoku {
         };
     }
 
+    // Maybe we should store this in the square instead?
     public getGroupID(square : SudokuSquare) : number {
         let index : number = this.squares.indexOf(square);
 
         return (Math.floor(index / 27) * 3) + Math.floor((index % 9) / 3);
+    }
+
+    public getSquare(y : number, x : number) : SudokuSquare {
+        return this.squares[y * 9 + x];
+    }
+
+    public isSolved() : boolean {
+        return !this.squares.some(square => !square.isFound());
+    }
+
+    public getPuzzleValues(delimeter : string = ',') : string {
+        return this.squares.map((square) => square.toString()).join(delimeter);
     }
 }
