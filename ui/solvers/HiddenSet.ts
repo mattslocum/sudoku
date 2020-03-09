@@ -61,9 +61,9 @@ export class HiddenSet implements ISolvers {
             let match : boolean = options[set[0]][0] == options[set[1]][0] &&
                 options[set[0]][1] == options[set[1]][1];
 
-            // options[set[0]].forEach((square) => {
-            //     match = match && square
-            // });
+            options[set[0]].forEach((square : any) => {
+                match = match && square
+            });
 
             if (match) {
                 squares.forEach((square) => {

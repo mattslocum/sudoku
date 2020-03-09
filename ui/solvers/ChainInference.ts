@@ -6,7 +6,6 @@ export class ChainInference implements ISolvers {
     constructor(private sudoku: Sudoku) {}
 
     public reduce() {
-        debugger;
         for (let y :number = 0; y < 9; y++) {
             for (let x :number = 0; x < 9; x++) {
                 this.checkSquare(this.sudoku.getSquare(y, x));

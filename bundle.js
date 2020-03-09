@@ -10999,7 +10999,6 @@ var ChainInference = /** @class */ (function () {
         this.sudoku = sudoku;
     }
     ChainInference.prototype.reduce = function () {
-        debugger;
         for (var y = 0; y < 9; y++) {
             for (var x = 0; x < 9; x++) {
                 this.checkSquare(this.sudoku.getSquare(y, x));
